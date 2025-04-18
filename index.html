@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apache Pinot 교육 가이드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold">Apache Pinot 교육</a>
+      <div class="space-x-4">
+        <a href="introduction.html" class="hover:text-blue-200 nav-link">소개</a>
+        <a href="architecture.html" class="hover:text-blue-200 nav-link">아키텍처</a>
+        <a href="data_modeling.html" class="hover:text-blue-200 nav-link">데이터 모델링</a>
+        <a href="data_processing.html" class="hover:text-blue-200 nav-link">데이터 처리</a>
+        <a href="data_usage.html" class="hover:text-blue-200 nav-link">데이터 사용</a>
+        <a href="performance_optimization.html" class="hover:text-blue-200 nav-link">성능 최적화</a>
+        <a href="operations_management.html" class="hover:text-blue-200 nav-link">운영 관리</a>
+        <a href="practical_examples.html" class="hover:text-blue-200 nav-link">실습 예제</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-blue-700 text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">Apache Pinot 운영 교육 가이드</h1>
+      <p class="text-lg md:text-xl mb-6">실시간 분석을 위한 분산형 OLAP 데이터 저장소, Apache Pinot을 배우고 활용하세요!</p>
+      <a href="introduction.html" class="bg-white text-blue-700 px-6 py-3 rounded-full font-semibold hover:bg-blue-100">학습 시작하기</a>
+    </div>
+  </section>
+
+  <!-- Overview Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">교육 콘텐츠 개요</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <a href="introduction.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">1. Apache Pinot 소개</h3>
+          <p class="text-gray-600">Pinot의 기본 개념, 주요 특징, 활용 사례를 알아봅니다.</p>
+        </a>
+        <a href="architecture.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">2. 아키텍처</h3>
+          <p class="text-gray-600">Pinot의 주요 컴포넌트와 데이터 흐름 아키텍처를 이해합니다.</p>
+        </a>
+        <a href="data_modeling.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">3. 데이터 모델링</h3>
+          <p class="text-gray-600">테이블 유형, 스키마 정의, 데이터 타입을 배웁니다.</p>
+        </a>
+        <a href="data_processing.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">4. 데이터 처리 흐름</h3>
+          <p class="text-gray-600">오프라인, 실시간, 하이브리드 데이터 처리 방법을 탐구합니다.</p>
+        </a>
+        <a href="data_usage.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">5. 데이터 사용 흐름</h3>
+          <p class="text-gray-600">쿼리 처리, 필터링, 집계, JSON 데이터 처리 방법을 배웁니다.</p>
+        </a>
+        <a href="performance_optimization.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">6. 성능 최적화 전략</h3>
+          <p class="text-gray-600">인덱싱, 쿼리 최적화, 사전 집계로 성능을 향상시킵니다.</p>
+        </a>
+        <a href="operations_management.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">7. 운영 관리</h3>
+          <p class="text-gray-600">클러스터 운영, 백업, 스케일링, 모니터링 방법을 학습합니다.</p>
+        </a>
+        <a href="practical_examples.html" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg">
+          <h3 class="text-xl font-semibold text-blue-600 mb-2">8. 실습 예제</h3>
+          <p class="text-gray-600">실제 데이터 저장, 인덱스 설정, 쿼리 예제를 실습합니다.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p>&copy; 2025 Apache Pinot 교육 가이드. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

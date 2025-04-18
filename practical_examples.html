@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>실습 예제</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold">Apache Pinot 교육</a>
+      <div class="space-x-4">
+        <a href="introduction.html" class="hover:text-blue-200 nav-link">소개</a>
+        <a href="architecture.html" class="hover:text-blue-200 nav-link">아키텍처</a>
+        <a href="data_modeling.html" class="hover:text-blue-200 nav-link">데이터 모델링</a>
+        <a href="data_processing.html" class="hover:text-blue-200 nav-link">데이터 처리</a>
+        <a href="data_usage.html" class="hover:text-blue-200 nav-link">데이터 사용</a>
+        <a href="performance_optimization.html" class="hover:text-blue-200 nav-link">성능 최적화</a>
+        <a href="operations_management.html" class="hover:text-blue-200 nav-link">운영 관리</a>
+        <a href="practical_examples.html" class="hover:text-blue-200 nav-link active">실습 예제</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-gray-800 mb-8">8. 실습 예제</h1>
+
+      <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.1 데이터 저장 예시</h2>
+        <p class="text-gray-600 mb-4">이벤트 로그 데이터:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>구조:</strong> timestamp, user_id, event_type, event_data</li>
+          <li><strong>활용:</strong> 실시간 사용자 행동 분석, 세션 추적, 이상 탐지</li>
+        </ul>
+        <p class="text-gray-600 mb-4">IoT 센서 데이터:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>구조:</strong> timestamp, sensor_id, location, temperature, humidity</li>
+          <li><strong>활용:</strong> 실시간 환경 모니터링, 예측 유지보수, 이상 징후 탐지</li>
+        </ul>
+        <p class="text-gray-600 mb-4">금융 거래 데이터:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>구조:</strong> transaction_id, timestamp, user_id, amount, currency, transaction_type</li>
+          <li><strong>활용:</strong> 실시간 거래 분석, 사기 탐지, 지출 패턴 분석</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.2 인덱스 성능 비교 예시</h2>
+        <p class="text-gray-600 mb-4">인덱스가 걸린 경우 - 비트맵 인덱스:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>실행 계획:</strong> 비트맵 인덱스로 필터링, 데이터 접근, 결과 집계</li>
+          <li><strong>장점:</strong> 빠른 데이터 접근, 낮은 디스크 I/O, 높은 쿼리 성능</li>
+        </ul>
+        <p class="text-gray-600 mb-4">정렬 인덱스:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>실행 계획:</strong> 범위 스캔, 데이터 접근, 결과 집계</li>
+          <li><strong>장점:</strong> 범위 쿼리에서 높은 성능, 정렬 연산 최소화</li>
+        </ul>
+        <p class="text-gray-600 mb-4">인덱스가 걸리지 않은 경우:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>실행 계획:</strong> 전체 스캔, 필터링 및 집계</li>
+          <li><strong>단점:</strong> 높은 디스크 I/O, 많은 메모리 사용, 낮은 쿼리 성능</li>
+        </ul>
+        <p class="text-gray-600 mb-4">성능 비교 결론:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>인덱스 사용 시 빠른 접근과 높은 성능</li>
+          <li>인덱스 미사용 시 전체 스캔으로 성능 저하</li>
+          <li>인덱스 유지 비용 고려</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.3 오프라인 테이블 생성 및 데이터 로드</h2>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+# 스키마 생성
+curl -X POST -H "Content-Type: application/json" -d @userSchema.json http://localhost:9000/schemas
+
+# 테이블 생성
+curl -X POST -H "Content-Type: application/json" -d @userTable.json http://localhost:9000/tables
+
+# 세그먼트 생성 및 업로드
+bin/pinot-admin.sh AddTable -schemaFile userSchema.json -tableConfigFile userTable.json -exec
+        </pre>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.4 실시간 테이블 설정</h2>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+{
+  "tableName": "realtimeUserEvents",
+  "tableType": "REALTIME",
+  "segmentsConfig": {
+    "timeColumnName": "timestamp",
+    "timeType": "MILLISECONDS",
+    "replication": "1",
+    "schemaName": "userEvents"
+  },
+  "streamConfigs": {
+    "streamType": "kafka",
+    "stream.kafka.consumer.type": "simple",
+    "stream.kafka.topic.name": "user-events",
+    "stream.kafka.decoder.class.name": "org.apache.pinot.plugin.stream.kafka.KafkaJSONMessageDecoder"
+  }
+}
+        </pre>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.5 기본 쿼리 예제</h2>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- 간단한 필터링 쿼리
+SELECT userId, eventType, timestamp
+FROM userEvents
+WHERE eventType = 'click'
+LIMIT 10;
+
+-- 집계 쿼리
+SELECT eventType, COUNT(*) as eventCount
+FROM userEvents
+GROUP BY eventType
+ORDER BY eventCount DESC;
+
+-- 시간 범위 쿼리
+SELECT DATE_TRUNC('day', timestamp) as day, COUNT(*) as eventCount
+FROM userEvents
+WHERE timestamp BETWEEN '2023-01-01' AND '2023-01-31'
+GROUP BY day
+ORDER BY day;
+        </pre>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.6 통합 데이터 플랫폼 설계</h2>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
++---------------------+       +---------------------+       +---------------------+
+|  Data Sources       | ----> |  Data Ingestion     | ----> |  Pinot Cluster      |
+| (e.g., Logs, Sensors)|       | (e.g., Kafka, Flume) |       |                     |
++---------------------+       +---------------------+       +---------------------+
+                                                      |
+                                                      v
+                                             +---------------------+
+                                             |  Pinot Query Layer  |
+                                             | (e.g., Pinot Broker) |
+                                             +---------------------+
+                                                      |
+                                                      v
+                                             +---------------------+
+                                             |  Data Visualization |
+                                             | (e.g., Grafana, Kibana) |
+                                             +---------------------+
+        </pre>
+        <p class="text-gray-600 mb-4">상세 설명:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>Data Sources:</strong> 로그, 센서, 트랜잭션 데이터 등</li>
+          <li><strong>Data Ingestion:</strong> Kafka, Flume, Spark Streaming</li>
+          <li><strong>Pinot Cluster:</strong> 데이터 저장 및 인덱싱</li>
+          <li><strong>Pinot Query Layer:</strong> 쿼리 처리 및 결과 집계</li>
+          <li><strong>Data Visualization:</strong> 분석 결과 시각화</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.7 인덱스 설정 예제</h2>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+{
+  "tableName": "userEvents",
+  "tableType": "OFFLINE",
+  "segmentsConfig": {
+    "timeColumnName": "timestamp",
+    "timeType": "MILLISECONDS",
+    "replication": "1",
+    "schemaName": "userEvents"
+  },
+  "indexingConfig": {
+    "invertedIndexColumns": ["userId", "eventType"],
+    "rangeIndexColumns": ["timestamp"],
+    "sortedColumn": ["timestamp"]
+  }
+}
+        </pre>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">8.8 조인 구현 방법</h2>
+        <p class="text-gray-600 mb-4">Pinot은 직접적인 조인을 지원하지 않지만 다음과 같은 방법으로 구현 가능:</p>
+        <p class="text-gray-600 mb-2">Pre-Join (사전 조인):</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT a.user_id, a.total_spent, b.user_name
+FROM user_spending a
+JOIN user_info b ON a.user_id = b.user_id;
+        </pre>
+        <p class="text-gray-600 mb-2">Client-Side Join:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- 첫 번째 쿼리
+SELECT user_id, total_spent
+FROM user_spending
+WHERE date >= '2023-01-01' AND date <= '2023-12-31';
+
+-- 두 번째 쿼리
+SELECT user_id, user_name
+FROM user_info;
+        </pre>
+        <p class="text-gray-600 mb-2">Lookup Table 사용:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT
+    user_id,
+    event_type,
+    TRANSFORM(user_id, 'userInfoLookup') AS user_name
+FROM
+    events;
+        </pre>
+        <p class="text-gray-600 mb-2">Pinot v2의 분산 조인:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT a.user_id, a.total_spent, b.user_name
+FROM user_spending a
+INNER JOIN user_info b ON a.user_id = b.user_id;
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2025 Apache Pinot 교육 가이드. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

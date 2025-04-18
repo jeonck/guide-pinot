@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apache Pinot 운영 교육 가이드</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Apache Pinot 운영 교육
+            </div>
+            <button class="nav-toggle" id="navToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="intro.html">소개</a></li>
+                <li><a href="architecture.html">아키텍처</a></li>
+                <li><a href="data-modeling.html">데이터 모델링</a></li>
+                <li><a href="data-processing.html">데이터 처리 흐름</a></li>
+                <li><a href="data-usage.html">데이터 사용 흐름</a></li>
+                <li><a href="optimization.html">성능 최적화</a></li>
+                <li><a href="operations.html">운영 관리</a></li>
+                <li><a href="examples.html">실습 예제</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar" id="sidebar">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="검색...">
+            </div>
+            <ul class="sidebar-list" id="sidebarList">
+                <li class="sidebar-heading">1. Apache Pinot 소개</li>
+                <li class="sidebar-item"><a href="intro.html#intro-what" class="sidebar-link">1.1 Apache Pinot이란?</a></li>
+                <li class="sidebar-item"><a href="intro.html#intro-features" class="sidebar-link">1.2 주요 특징</a></li>
+                <li class="sidebar-item"><a href="intro.html#intro-cases" class="sidebar-link">1.3 활용 사례</a></li>
+
+                <li class="sidebar-heading">2. Apache Pinot 아키텍처</li>
+                <li class="sidebar-item"><a href="architecture.html#arch-components" class="sidebar-link">2.1 주요 컴포넌트</a></li>
+                <li class="sidebar-item"><a href="architecture.html#arch-dataflow" class="sidebar-link">2.2 데이터 흐름 아키텍처</a></li>
+
+                <li class="sidebar-heading">3. 데이터 모델링</li>
+                <li class="sidebar-item"><a href="data-modeling.html#model-tables" class="sidebar-link">3.1 테이블 유형</a></li>
+                <li class="sidebar-item"><a href="data-modeling.html#model-schema" class="sidebar-link">3.2 스키마 정의</a></li>
+                <li class="sidebar-item"><a href="data-modeling.html#model-datatypes" class="sidebar-link">3.3 데이터 타입</a></li>
+
+                <li class="sidebar-heading">4. 데이터 처리 흐름</li>
+                <li class="sidebar-item"><a href="data-processing.html#process-collect" class="sidebar-link">4.1 데이터 수집 및 통합</a></li>
+                <li class="sidebar-item"><a href="data-processing.html#process-offline" class="sidebar-link">4.2 오프라인 데이터 처리</a></li>
+                <li class="sidebar-item"><a href="data-processing.html#process-realtime" class="sidebar-link">4.3 실시간 데이터 처리</a></li>
+                <li class="sidebar-item"><a href="data-processing.html#process-hybrid" class="sidebar-link">4.4 하이브리드 데이터 처리</a></li>
+
+                <li class="sidebar-heading">5. 데이터 사용 흐름</li>
+                <li class="sidebar-item"><a href="data-usage.html#usage-query" class="sidebar-link">5.1 쿼리 처리 과정</a></li>
+                <li class="sidebar-item"><a href="data-usage.html#usage-syntax" class="sidebar-link">5.2 기본 쿼리 문법</a></li>
+                <li class="sidebar-item"><a href="data-usage.html#usage-filtering" class="sidebar-link">5.3 필터링 기능</a></li>
+                <li class="sidebar-item"><a href="data-usage.html#usage-aggregation" class="sidebar-link">5.4 집계 및 그룹화 기능</a></li>
+                <li class="sidebar-item"><a href="data-usage.html#usage-json" class="sidebar-link">5.5 JSON 데이터 처리</a></li>
+
+                <li class="sidebar-heading">6. 성능 최적화 전략</li>
+                <li class="sidebar-item"><a href="optimization.html#opt-indexing" class="sidebar-link">6.1 인덱싱 전략</a></li>
+                <li class="sidebar-item"><a href="optimization.html#opt-query" class="sidebar-link">6.2 쿼리 최적화</a></li>
+                <li class="sidebar-item"><a href="optimization.html#opt-preagg" class="sidebar-link">6.3 사전 집계</a></li>
+                <li class="sidebar-item"><a href="optimization.html#opt-monitoring" class="sidebar-link">6.4 성능 모니터링</a></li>
+
+                <li class="sidebar-heading">7. 운영 관리</li>
+                <li class="sidebar-item"><a href="operations.html#ops-lookup" class="sidebar-link">7.0 Lookup Table 활용</a></li>
+                <li class="sidebar-item"><a href="operations.html#ops-cluster" class="sidebar-link">7.1 클러스터 운영</a></li>
+                <li class="sidebar-item"><a href="operations.html#ops-backup" class="sidebar-link">7.2 백업 및 복구</a></li>
+                <li class="sidebar-item"><a href="operations.html#ops-scaling" class="sidebar-link">7.3 스케일링</a></li>
+                <li class="sidebar-item"><a href="operations.html#ops-monitoring" class="sidebar-link">7.4 모니터링 및 로깅</a></li>
+
+                <li class="sidebar-heading">8. 실습 예제</li>
+                <li class="sidebar-item"><a href="examples.html#examples-data" class="sidebar-link">8.1 데이터 저장 예시</a></li>
+                <li class="sidebar-item"><a href="examples.html#examples-index" class="sidebar-link">8.2 인덱스 성능 비교 예시</a></li>
+                <li class="sidebar-item"><a href="examples.html#examples-offline" class="sidebar-link">8.3 오프라인 테이블 생성</a></li>
+                <li class="sidebar-item"><a href="examples.html#examples-realtime" class="sidebar-link">8.4 실시간 테이블 설정</a></li>
+                <li class="sidebar-item"><a href="examples.html#examples-query" class="sidebar-link">8.5 기본 쿼리 예제</a></li>
+                <li class="sidebar-item"><a href="examples.html#examples-platform" class="sidebar-link">8.6 데이터 플랫폼 설계</a></li>
+                <li class="sidebar-item"><a href="examples.html#examples-index-setting" class="sidebar-link">8.7 인덱스 설정 예제</a></li>
+                <li class="sidebar-item"><a href="examples.html#examples-join" class="sidebar-link">8.8 조인 구현 방법</a></li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <!-- 각 페이지의 콘텐츠가 여기에 삽입됨 -->
+            {{CONTENT}}
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div>Apache Pinot 운영 교육 가이드 © 2025</div>
+            <ul class="footer-links">
+                <li><a href="intro.html">소개</a></li>
+                <li><a href="architecture.html">아키텍처</a></li>
+                <li><a href="data-modeling.html">데이터 모델링</a></li>
+                <li><a href="data-processing.html">데이터 처리 흐름</a></li>
+                <li><a href="data-usage.html">데이터 사용 흐름</a></li>
+                <li><a href="optimization.html">성능 최적화</a></li>
+                <li><a href="operations.html">운영 관리</a></li>
+                <li><a href="examples.html">실습 예제</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

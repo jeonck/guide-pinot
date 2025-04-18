@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>데이터 사용 흐름</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold">Apache Pinot 교육</a>
+      <div class="space-x-4">
+        <a href="introduction.html" class="hover:text-blue-200 nav-link">소개</a>
+        <a href="architecture.html" class="hover:text-blue-200 nav-link">아키텍처</a>
+        <a href="data_modeling.html" class="hover:text-blue-200 nav-link">데이터 모델링</a>
+        <a href="data_processing.html" class="hover:text-blue-200 nav-link">데이터 처리</a>
+        <a href="data_usage.html" class="hover:text-blue-200 nav-link active">데이터 사용</a>
+        <a href="performance_optimization.html" class="hover:text-blue-200 nav-link">성능 최적화</a>
+        <a href="operations_management.html" class="hover:text-blue-200 nav-link">운영 관리</a>
+        <a href="practical_examples.html" class="hover:text-blue-200 nav-link">실습 예제</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-gray-800 mb-8">5. 데이터 사용 흐름</h1>
+
+      <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">5.1 쿼리 처리 과정</h2>
+        <p class="text-gray-600 mb-4">쿼리 라우팅:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>클라이언트가 Pinot Broker에 쿼리 전송</li>
+          <li>Broker는 쿼리를 관련 Server로 라우팅</li>
+        </ul>
+        <p class="text-gray-600 mb-4">쿼리 실행:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>Server는 로컬 세그먼트에서 쿼리 실행</li>
+          <li>결과를 Broker에 반환</li>
+        </ul>
+        <p class="text-gray-600 mb-4">결과 병합:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>Broker는 여러 Server로부터 받은 결과를 병합</li>
+          <li>최종 결과를 클라이언트에 반환</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">5.2 기본 쿼리 문법</h2>
+        <p class="text-gray-600 mb-4">Pinot은 SQL과 유사한 쿼리 언어를 사용합니다:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT column1, column2, aggregate_function(column3)
+FROM tableName
+WHERE filter_condition
+GROUP BY column1, column2
+HAVING aggregate_condition
+ORDER BY column1
+LIMIT 100
+        </pre>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">5.3 필터링 기능</h2>
+        <p class="text-gray-600 mb-4">Pinot은 다양한 필터링 연산자를 지원합니다:</p>
+        <p class="text-gray-600 mb-2">기본 필터 연산자:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- Equal
+SELECT * FROM table WHERE column = 'value';
+
+-- Not Equal
+SELECT * FROM table WHERE column != 'value';
+
+-- Greater Than
+SELECT * FROM table WHERE column > 100;
+
+-- Less Than
+SELECT * FROM table WHERE column < 100;
+
+-- Greater Than or Equal
+SELECT * FROM table WHERE column >= 100;
+
+-- Less Than or Equal
+SELECT * FROM table WHERE column <= 100;
+        </pre>
+        <p class="text-gray-600 mb-2">논리 연산자:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- AND
+SELECT * FROM table WHERE column1 = 'value1' AND column2 > 100;
+
+-- OR
+SELECT * FROM table WHERE column1 = 'value1' OR column2 < 100;
+
+-- NOT
+SELECT * FROM table WHERE NOT (column1 = 'value1');
+        </pre>
+        <p class="text-gray-600 mb-2">IN 및 NOT IN:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- IN
+SELECT * FROM table WHERE column IN ('value1', 'value2', 'value3');
+
+-- NOT IN
+SELECT * FROM table WHERE column NOT IN ('value1', 'value2', 'value3');
+        </pre>
+        <p class="text-gray-600 mb-2">LIKE 및 NOT LIKE:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- LIKE
+SELECT * FROM table WHERE column LIKE 'pattern%';
+
+-- NOT LIKE
+SELECT * FROM table WHERE column NOT LIKE 'pattern%';
+        </pre>
+        <p class="text-gray-600 mb-2">BETWEEN:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT * FROM table WHERE column BETWEEN 100 AND 200;
+        </pre>
+        <p class="text-gray-600 mb-2">IS NULL 및 IS NOT NULL:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- IS NULL
+SELECT * FROM table WHERE column IS NULL;
+
+-- IS NOT NULL
+SELECT * FROM table WHERE column IS NOT NULL;
+        </pre>
+        <p class="text-gray-600 mb-2">복합 필터링 예제:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT * FROM table
+WHERE eventTime BETWEEN '2023-01-01' AND '2023-12-31'
+AND category = 'electronics'
+AND price > 100;
+        </pre>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">5.4 집계 및 그룹화 기능</h2>
+        <p class="text-gray-600 mb-4">Pinot은 다양한 집계 함수와 GROUP BY 기능을 제공합니다:</p>
+        <p class="text-gray-600 mb-2">기본 집계 함수:</p>
+        <p class="text-gray-600 mb-4">SUM, AVG, COUNT, MAX, MIN</p>
+        <p class="text-gray-600 mb-2">GROUP BY 기능:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- 기본 집계
+SELECT category, SUM(quantity) AS total_quantity
+FROM sales_data
+GROUP BY category;
+
+-- 다중 컬럼 그룹화
+SELECT category, region, SUM(quantity) AS total_quantity
+FROM sales_data
+GROUP BY category, region;
+
+-- 필터링과 함께 사용
+SELECT category, SUM(price) AS total_price
+FROM sales_data
+WHERE date >= '2023-01-01' AND date <= '2023-12-31'
+GROUP BY category;
+
+-- 집계 함수의 조합
+SELECT category, COUNT(*) AS total_sales, AVG(price) AS avg_price
+FROM sales_data
+GROUP BY category;
+        </pre>
+        <p class="text-gray-600 mb-2">HAVING 절:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT category, SUM(quantity) AS total_quantity
+FROM sales_data
+GROUP BY category
+HAVING total_quantity > 1000;
+        </pre>
+        <p class="text-gray-600 mb-2">윈도우 함수:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- ROW_NUMBER 예제
+SELECT
+    user_id,
+    event_type,
+    timestamp,
+    ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY timestamp) AS event_order
+FROM
+    event_table;
+
+-- RANK 예제
+SELECT
+    product_id,
+    sales_amount,
+    RANK() OVER (ORDER BY sales_amount DESC) AS sales_rank
+FROM
+    sales_table;
+
+-- SUM 윈도우 함수
+SELECT
+    user_id,
+    order_date,
+    order_amount,
+    SUM(order_amount) OVER (PARTITION BY user_id ORDER BY order_date ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_sales
+FROM
+    orders_table;
+        </pre>
+        <p class="text-gray-600 mb-4">LIMIT 사용 시 주의사항:</p>
+        <p class="text-gray-600 mb-4">GROUP BY 쿼리는 기본적으로 결과 행 수에 제한이 있을 수 있으므로, 명시적으로 LIMIT을 지정하는 것이 좋습니다.</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT category, SUM(quantity) AS total_quantity
+FROM sales_data
+GROUP BY category
+LIMIT 100;
+        </pre>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">5.5 JSON 데이터 처리</h2>
+        <p class="text-gray-600 mb-4">Pinot은 JSON 데이터를 효율적으로 처리하는 다양한 기능을 제공합니다:</p>
+        <p class="text-gray-600 mb-2">JSON 데이터 저장 및 인덱싱:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>JSON 필드 매핑: JSON 객체의 각 필드를 Pinot의 컬럼으로 매핑</li>
+          <li>인덱싱: JSON 필드에 대해 비트맵 인덱스, 정렬 인덱스 등 생성</li>
+        </ul>
+        <p class="text-gray-600 mb-2">JSON_EXTRACT:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- 기본 사용법
+SELECT JSON_EXTRACT(json_column, '$.path.to.value') AS extracted_value
+FROM your_table;
+
+-- 실제 예시
+SELECT JSON_EXTRACT(user_data, '$.address.city') AS city
+FROM user_table;
+        </pre>
+        <p class="text-gray-600 mb-2">JSON_MATCH:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- 기본 사용법
+SELECT *
+FROM your_table
+WHERE JSON_MATCH(json_column, '$.path.to.value', 'your_value');
+
+-- 실제 예시
+SELECT *
+FROM user_table
+WHERE JSON_MATCH(user_data, '$.address.city', 'New York');
+        </pre>
+        <p class="text-gray-600 mb-2">JSON_CONTAINS:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- 기본 사용법
+SELECT *
+FROM your_table
+WHERE JSON_CONTAINS(json_column, '$.path.to.array', 'your_value');
+
+-- 실제 예시
+SELECT *
+FROM user_table
+WHERE JSON_CONTAINS(user_data, '$.interests', 'music');
+        </pre>
+        <p class="text-gray-600 mb-2">JSON 데이터 변환 및 집계:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- JSON 데이터에서 추출한 값으로 집계
+SELECT 
+    JSON_EXTRACT(user_data, '$.address.city') AS city,
+    COUNT(*) AS user_count
+FROM user_table
+GROUP BY JSON_EXTRACT(user_data, '$.address.city');
+
+-- JSON 데이터 필터링 후 집계
+SELECT 
+    COUNT(*) AS premium_users
+FROM user_table
+WHERE JSON_MATCH(user_data, '$.subscription.type', 'premium');
+        </pre>
+        <p class="text-gray-600 mb-2">복합 JSON 쿼리:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT 
+    JSON_EXTRACT(user_data, '$.name') AS user_name,
+    JSON_EXTRACT(user_data, '$.age') AS user_age
+FROM user_table
+WHERE JSON_MATCH(user_data, '$.address.country', 'USA')
+AND JSON_CONTAINS(user_data, '$.interests', 'technology');
+        </pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2025 Apache Pinot 교육 가이드. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

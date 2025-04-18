@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>데이터 처리 흐름</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold">Apache Pinot 교육</a>
+      <div class="space-x-4">
+        <a href="introduction.html" class="hover:text-blue-200 nav-link">소개</a>
+        <a href="architecture.html" class="hover:text-blue-200 nav-link">아키텍처</a>
+        <a href="data_modeling.html" class="hover:text-blue-200 nav-link">데이터 모델링</a>
+        <a href="data_processing.html" class="hover:text-blue-200 nav-link active">데이터 처리</a>
+        <a href="data_usage.html" class="hover:text-blue-200 nav-link">데이터 사용</a>
+        <a href="performance_optimization.html" class="hover:text-blue-200 nav-link">성능 최적화</a>
+        <a href="operations_management.html" class="hover:text-blue-200 nav-link">운영 관리</a>
+        <a href="practical_examples.html" class="hover:text-blue-200 nav-link">실습 예제</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-gray-800 mb-8">4. 데이터 처리 흐름</h1>
+
+      <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">4.1 데이터 수집 및 통합</h2>
+        <p class="text-gray-600 mb-4">데이터 소스:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>로그 데이터</li>
+          <li>센서 데이터</li>
+          <li>트랜잭션 데이터</li>
+          <li>사용자 활동 데이터</li>
+        </ul>
+        <p class="text-gray-600 mb-4">데이터 수집 도구:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>Kafka:</strong> 실시간 데이터 스트리밍</li>
+          <li><strong>HDFS, S3:</strong> 배치 데이터 저장</li>
+          <li><strong>Flume, Logstash:</strong> 로그 데이터 수집</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">4.2 오프라인 데이터 처리</h2>
+        <p class="text-gray-600 mb-4">세그먼트 생성:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>데이터를 세그먼트로 나누어 저장</li>
+          <li>각 세그먼트는 불변(immutable)</li>
+        </ul>
+        <p class="text-gray-600 mb-4">배치 처리 과정:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>데이터 추출 (Extract)</li>
+          <li>데이터 변환 (Transform)</li>
+          <li>데이터 로드 (Load)</li>
+        </ul>
+        <p class="text-gray-600 mb-4">오프라인 테이블 예시 - 로그 분석:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>사용 사례:</strong> 웹 서버 로그 데이터를 분석하여 사용자 행동 패턴 파악</li>
+          <li><strong>데이터 소스:</strong> HDFS, S3, 로컬 파일 시스템</li>
+          <li><strong>분석 예시:</strong> 특정 시간대 사용자 트래픽, 오류 로그 분석, 세션 길이 및 페이지 뷰 분석</li>
+        </ul>
+        <p class="text-gray-600 mb-4">A/B 테스트 결과 분석:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>사용 사례:</strong> A/B 테스트 결과를 분석하여 성과 평가</li>
+          <li><strong>분석 예시:</strong> 전환율 비교, 사용자 행동 패턴, 비즈니스 인사이트 도출</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">4.3 실시간 데이터 처리</h2>
+        <p class="text-gray-600 mb-4">스트리밍 데이터 처리:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>Kafka와 같은 메시지 큐에서 데이터 소비</li>
+          <li>실시간으로 데이터 인덱싱 및 저장</li>
+        </ul>
+        <p class="text-gray-600 mb-4">실시간 세그먼트 관리:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>데이터를 작은 세그먼트로 나누어 저장</li>
+          <li>일정 시간 후 오프라인 세그먼트로 전환 가능</li>
+        </ul>
+        <p class="text-gray-600 mb-4">실시간 테이블 구성 예시:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+{
+  "tableName": "realtimeTable",
+  "tableType": "REALTIME",
+  "schemaName": "exampleSchema",
+  "segmentsConfig": {
+    "timeColumnName": "eventTime",
+    "timeType": "DATETIME",
+    "retentionTimeUnit": "DAYS",
+    "retentionTimeValue": 7
+  },
+  "replication": 2,
+  "streamConfigs": {
+    "streamType": "kafka",
+    "topicName": "exampleTopic",
+    "consumerType": "OLD_CONSUMER"
+  },
+  "ingestionSchema": {
+    "transformConfigs": [
+      {
+        "expression": "TO_UPPER(${category})",
+        "outputColumn": "categoryUpper"
+      }
+    ]
+  }
+}
+        </pre>
+        <p class="text-gray-600 mb-4">실시간 테이블 사용 사례:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>실시간 대시보드:</strong> 웹사이트 트래픽 실시간 모니터링, 활성 사용자 수 집계, 페이지별 방문자 추적</li>
+          <li><strong>실시간 이상 탐지:</strong> 금융 거래 이상 탐지, 비정상 거래 패턴 감지, 사기 활동 모니터링</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">4.4 하이브리드 데이터 처리</h2>
+        <p class="text-gray-600 mb-4">통합 처리 방식:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>실시간 데이터와 배치 데이터 통합 처리</li>
+          <li>단일 쿼리로 모든 데이터 접근 가능</li>
+        </ul>
+        <p class="text-gray-600 mb-4">하이브리드 테이블 예시 - 전자상거래 대시보드:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>사용 사례:</strong> 실시간 및 과거 판매 데이터 분석</li>
+          <li><strong>데이터 소스:</strong> Kafka(실시간), HDFS(과거)</li>
+          <li><strong>분석 예시:</strong> 판매 추세 비교, 재고 관리, 마케팅 전략</li>
+        </ul>
+        <p class="text-gray-600 mb-4">금융 거래 모니터링:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>사용 사례:</strong> 실시간 및 과거 거래 데이터로 이상 탐지</li>
+          <li><strong>분석 예시:</strong> 이상 거래 탐지, 시장 변동 분석, 사기 탐지 모델 개선</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2025 Apache Pinot 교육 가이드. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

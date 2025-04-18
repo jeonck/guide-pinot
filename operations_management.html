@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>운영 관리</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans">
+  <!-- Navigation Bar -->
+  <nav class="bg-blue-600 text-white sticky top-0 z-50 shadow-md">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold">Apache Pinot 교육</a>
+      <div class="space-x-4">
+        <a href="introduction.html" class="hover:text-blue-200 nav-link">소개</a>
+        <a href="architecture.html" class="hover:text-blue-200 nav-link">아키텍처</a>
+        <a href="data_modeling.html" class="hover:text-blue-200 nav-link">데이터 모델링</a>
+        <a href="data_processing.html" class="hover:text-blue-200 nav-link">데이터 처리</a>
+        <a href="data_usage.html" class="hover:text-blue-200 nav-link">데이터 사용</a>
+        <a href="performance_optimization.html" class="hover:text-blue-200 nav-link">성능 최적화</a>
+        <a href="operations_management.html" class="hover:text-blue-200 nav-link active">운영 관리</a>
+        <a href="practical_examples.html" class="hover:text-blue-200 nav-link">실습 예제</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content Section -->
+  <section class="py-16">
+    <div class="container mx-auto px-4">
+      <h1 class="text-4xl font-bold text-gray-800 mb-8">7. 운영 관리</h1>
+
+      <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">7.0 Lookup Table 활용</h2>
+        <p class="text-gray-600 mb-4">Pinot에서는 조인 대신 lookup 테이블을 사용하여 성능을 최적화합니다:</p>
+        <p class="text-gray-600 mb-2">Lookup Table의 개념:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>정의:</strong> 자주 사용되는 작은 데이터셋을 메모리에 저장</li>
+          <li><strong>사용 사례:</strong> 작은 데이터셋, 빠른 조회</li>
+        </ul>
+        <p class="text-gray-600 mb-2">Lookup Table 설정 방법:</p>
+        <p class="text-gray-600 mb-2">테이블 생성:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+{
+  "tableName": "myLookupTable",
+  "dataFilePath": "/path/to/your/lookup/data.csv",
+  "dataType": "CSV",
+  "columns": ["id", "value"]
+}
+        </pre>
+        <p class="text-gray-600 mb-2">데이터 로드:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+curl -X POST -H "Content-Type: application/json" -d @lookupTableConfig.json http://pinot-controller:9000/tables
+        </pre>
+        <p class="text-gray-600 mb-2">쿼리에서 사용:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+SELECT id, TRANSFORM(id, 'myLookupTable') AS value
+FROM yourTable
+        </pre>
+        <p class="text-gray-600 mb-2">Lookup Table 사용 예시:</p>
+        <pre class="bg-gray-800 text-white p-4 rounded mb-4">
+-- 사용자 ID로 사용자 이름 조회
+SELECT event_id, user_id, TRANSFORM(user_id, 'userInfoLookup') AS user_name
+FROM user_events;
+
+-- 제품 코드로 제품 카테고리 조회
+SELECT order_id, product_id, TRANSFORM(product_id, 'productCatalog') AS product_category
+FROM orders;
+        </pre>
+        <p class="text-gray-600 mb-4">주의사항:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li><strong>메모리 사용:</strong> 메모리에 로드되므로 사용량 고려</li>
+          <li><strong>데이터 갱신:</strong> 자주 변경 시 갱신 메커니즘 필요</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">7.1 클러스터 운영</h2>
+        <p class="text-gray-600 mb-2">노드 관리:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>노드 추가 및 제거</li>
+          <li>노드 상태 모니터링</li>
+        </ul>
+        <p class="text-gray-600 mb-2">세그먼트 관리:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>세그먼트 생성 및 업로드</li>
+          <li>세그먼트 삭제 및 교체</li>
+        </ul>
+        <p class="text-gray-600 mb-2">설정 관리:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>클러스터 설정 변경</li>
+          <li>테이블 설정 최적화</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">7.2 백업 및 복구</h2>
+        <p class="text-gray-600 mb-2">데이터 백업:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>정기적인 세그먼트 백업</li>
+          <li>메타데이터 백업</li>
+        </ul>
+        <p class="text-gray-600 mb-2">복구 절차:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>세그먼트 복구</li>
+          <li>클러스터 복구</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">7.3 스케일링</h2>
+        <p class="text-gray-600 mb-2">수평적 확장:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>노드 추가를 통한 확장</li>
+          <li>복제본 조정</li>
+        </ul>
+        <p class="text-gray-600 mb-2">수직적 확장:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>노드 리소스 증가</li>
+          <li>메모리, CPU 할당 최적화</li>
+        </ul>
+
+        <h2 class="text-2xl font-semibold text-blue-600 mb-4">7.4 모니터링 및 로깅</h2>
+        <p class="text-gray-600 mb-2">모니터링 도구:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>Prometheus, Grafana를 활용한 모니터링</li>
+          <li>대시보드 구성</li>
+        </ul>
+        <p class="text-gray-600 mb-2">로그 관리:</p>
+        <ul class="list-disc list-inside text-gray-600 mb-4">
+          <li>로그 수집 및 분석</li>
+          <li>이슈 추적 및 디버깅</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-4 text-center">
+      <p>© 2025 Apache Pinot 교육 가이드. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="scripts.js"></script>
+</body>
+</html>
